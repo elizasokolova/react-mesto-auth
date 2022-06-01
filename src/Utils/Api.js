@@ -1,7 +1,7 @@
 class Api {
     constructor({baseUrl, headers}) {
-        this._baseUrl = baseUrl;
-        this._headers = headers;
+        this._baseUrl = baseUrl; // Адрес откуда приходят данные
+        this._headers = headers; // Токен пользователя
     }
 
     _checkResponse(response) {

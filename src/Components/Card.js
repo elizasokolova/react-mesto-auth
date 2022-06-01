@@ -22,16 +22,16 @@ export default function Card(props) {
                 <h2 className="card__title">{props.card.name}</h2>
                 <div className="card__container-like">
                     <button type="button"
-                            className={cardLikeButtonClassName}
-                            aria-label="Лайк"
-                            onClick={handleCardLike}></button>
+                        className={cardLikeButtonClassName}
+                        aria-label="Лайк"
+                        onClick={handleCardLike}/>
                     <span className="card__sum-like">{props.card.likes.length}</span>
                 </div>
             </div>
             <button type="button"
-                    className={cardDeleteButtonClassName}
-                    aria-label="Удалить"
-                    onClick={handleCardDelete}></button>
+                className={cardDeleteButtonClassName}
+                aria-label="Удалить"
+                onClick={handleCardDelete}/>
         </article>
     );
 }

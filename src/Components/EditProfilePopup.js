@@ -39,10 +39,10 @@ export default function EditProfilePopup ({isOpen, onClose, onUserUpdate}) {
 
             <input name="name" id="name" type="text" minLength="2" maxLength="40" required
                    placeholder="Имя" onChange={onNameChange} value={name} className="popup__edit-area"/>
-            <span className="popup__error" id="popup__name-error"></span>
+            <span className="popup__error" id="popup__name-error"/>
             <input name="about" id="about" type="text" minLength="2" maxLength="200" required
                    placeholder="Описание" onChange={onDescriptionChange} value={description} className="popup__edit-area"/>
-            <span className="popup__error" id="popup__about-error"></span>
+            <span className="popup__error" id="popup__about-error"/>
         </PopupWithForm>
     )
 }

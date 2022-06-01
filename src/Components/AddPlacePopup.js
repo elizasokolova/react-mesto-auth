@@ -32,10 +32,10 @@ export default function AddPlacePopup ({isOpen, onClose, onAddPlace}) {
             <input name="title" id="title" value={title} onChange={onTitleChange}
                    type="text" minLength="2" maxLength="30" required
                    placeholder="Название" className="popup__edit-area"/>
-            <span className="popup__error" id="popup__title-error"></span>
+            <span className="popup__error" id="popup__title-error"/>
             <input name="link" id="link" value={link} onChange={onLinkChange}
                    type="url" required placeholder="Ссылка на картинку" className="popup__edit-area"/>
-            <span className="popup__error" id="popup__link-error"></span>
+            <span className="popup__error" id="popup__link-error"/>
         </PopupWithForm>
     )
 }

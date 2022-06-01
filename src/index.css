@@ -9,6 +9,9 @@
 /* Header */
 @import url(../src/Blocks/header/header.css);
 @import url(../src/Blocks/header/__logo/header__logo.css);
+@import url(../src/Blocks/header/__button/header__button.css);
+@import url(../src/Blocks/header/__user/header__user.css);
+@import url(../src/Blocks/header/__user-email/header__user-email.css);
 
 /* Footer */
 @import url(../src/Blocks/footer/footer.css);
@@ -36,6 +39,8 @@
 @import url(../src/Blocks/popup/__save-button/popup__save-button.css);
 @import url(../src/Blocks/popup/__close-button/popup__close-button.css);
 @import url(../src/Blocks/popup/__delete-button/popup__delete-button.css);
+@import url(../src/Blocks/popup/__tooltip-img/popup__tooltip-img.css);
+@import url(../src/Blocks/popup/__tooltip-msg/popup__tooltip-msg.css);
 
 /* Валидация */
 @import url(../src/Blocks/popup/__error/popup__error.css);
@@ -62,3 +67,11 @@
 @import url(../src/Blocks/popup/__full-container/popup__full-container.css);
 @import url(../src/Blocks/popup/__full-img/popup__full-img.css);
 @import url(../src/Blocks/popup/__full-img-name/popup__full-img-name.css);
+
+/* Popup authorization */
+@import url(../src/Blocks/popup/__container/_authorization/popup__container_authorization.css);
+@import url(../src/Blocks/popup/__edit/_authorization/popup__edit_authorization.css);
+@import url(../src/Blocks/popup/__edit-area/_authorization/popup__edit-area_authorization.css);
+@import url(../src/Blocks/popup/__save-button/_authorization/popup__save-button_authorization.css);
+@import url(../src/Blocks/popup/__form/_authorization/popup__form_authorization.css);
+@import url(../src/Blocks/popup/__link/popup__link.css);
