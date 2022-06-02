@@ -20,7 +20,6 @@ export default function Login({onLogin}) {
                     onChange={onEmailChange}
                     className="popup__edit-area popup__edit-area_authorization"
                     required
-                    name="email"
                     type="email"
                     autoComplete="off"
                     placeholder="Email"
@@ -30,7 +29,6 @@ export default function Login({onLogin}) {
                     onChange={onPasswordChange}
                     className="popup__edit-area popup__edit-area_authorization"
                     required
-                    name="password"
                     type="password"
                     autoComplete="off"
                     placeholder="Пароль"

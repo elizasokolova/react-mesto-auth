@@ -11,7 +11,7 @@ class Auth {
         return Promise.reject(`Ошибка: ${response.status}`);
     }
 
-    register(password, email) {
+    register(email, password) {
         return fetch(`${this._baseUrl}/signup`, {
             method: "POST",
             headers: this._headers,
@@ -22,7 +22,7 @@ class Auth {
         }).then(this.checkResponse);
     }
 
-    login(password, email) {
+    login(email, password) {
         return fetch(`${this._baseUrl}/signin`, {
             method: "POST",
             headers: this._headers,
@@ -31,12 +31,12 @@ class Auth {
                 email: email,
             }),
         }).then(this.checkResponse)
-        .then((data) => {
-            if (data.token) {
-                localStorage.setItem("jwt", data.token);
-                return data;
-            }
-        })
+            .then((data) => {
+                if (data.token) {
+                    localStorage.setItem("jwt", data.token);
+                    return data;
+                }
+            })
     }
 
     checkTokenValidity(jwt) {

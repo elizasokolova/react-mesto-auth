@@ -21,7 +21,6 @@ export default function Register({onRegister}) {
                     onChange={onEmailChange}
                     className="popup__edit-area popup__edit-area_authorization"
                     required
-                    name="email"
                     type="email"
                     autoComplete="off"
                     placeholder="Email"
@@ -31,7 +30,6 @@ export default function Register({onRegister}) {
                     onChange={onPasswordChange}
                     className="popup__edit-area popup__edit-area_authorization"
                     required
-                    name="password"
                     type="password"
                     autoComplete="off"
                     placeholder="Пароль"

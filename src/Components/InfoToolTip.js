@@ -15,7 +15,7 @@ export default function InfoToolTip({isOpen, onClose, isRegistered}) {
                     :
                     <div>
                         <img src={`${error}`} alt="Не зарегестрирован" className="popup__tooltip-img"/>
-                        <p className="popup__tooltip-msg">Что-то пошло не так. Попробуйте ещё раз!</p>
+                        <p className="popup__tooltip-msg">Что-то пошло не так! Попробуйте ещё раз.</p>
                     </div>
                 }
             </div>

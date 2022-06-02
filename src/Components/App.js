@@ -22,12 +22,12 @@ export default function App() {
     const [isAddCardPopupOpened, setIsAddCardPopupOpened] = React.useState(false);
     const [isChangeAvatarPopupOpened, setIsChangeAvatarPopupOpened] = React.useState(false);
     const [isDeleteCardPopupOpened, setIsDeleteCardPopupOpened] = React.useState(false);
-    const [isInfoToolTipPopupOpen, setInfoToolTipPopupOpen] = React.useState(false);
+    const [isInfoToolTipPopupOpen, setIsInfoToolTipPopupOpen] = React.useState(false);
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [cardToDelete, setCardToDelete]= React.useState(null);
     const [isRegistered, setIsRegistered] = React.useState(false);
     const [isLogin, setIsLogin] = React.useState(false);
-    const [email, setEmail] = React.useState("");
+    const [email, setEmail] = React.useState(null);
     const history = useHistory();
 
     const [currentUser, setCurrentUser] = React.useState({
@@ -57,29 +57,18 @@ export default function App() {
     }
 
     useEffect(() => {
-        if (isLogin) {
-            Promise.all([api.getCurrentUser(), api.getInitialCards()])
-                .then(([userInfo, cardInfo]) => {
-                    setCurrentUser(userInfo);
-                    setCards(cardInfo);
-                })
-                .catch((err) => console.log(err))
-        }
+        isLogin && api.getInitialCards()
+            .then(setCards)
+            .catch(err => console.error(`Error: ${err}`));
     }, [isLogin]);
 
-    // useEffect(() => {
-    //     api.getInitialCards()
-    //         .then(setCards)
-    //         .catch(err => console.error(`Error: ${err}`));
-    // }, []);
-    //
-    // useEffect(() => {
-    //    api.getCurrentUser()
-    //        .then((user) => {
-    //            setCurrentUser(user);
-    //        })
-    //        .catch(err => console.error(`Error: ${err}`));
-    // }, []);
+    useEffect(() => {
+        isLogin && api.getCurrentUser()
+            .then((user) => {
+                setCurrentUser(user);
+            })
+            .catch(err => console.error(`Error: ${err}`));
+    }, [isLogin]);
 
     useEffect(() => {
         function handleOverlayEscClose(event) {
@@ -96,7 +85,7 @@ export default function App() {
         setIsAddCardPopupOpened(false);
         setIsChangeAvatarPopupOpened(false);
         setIsDeleteCardPopupOpened(false)
-        setInfoToolTipPopupOpen(false);
+        setIsInfoToolTipPopupOpen(false);
         setSelectedCard(null);
     };
 
@@ -127,43 +116,33 @@ export default function App() {
             .catch((err => console.error(`Error: ${err}`)))
     }
 
-    //Хук для проверки токена при каждом монтировании компонента App
     useEffect(() => {
-        const jwt = localStorage.getItem("jwt");
-        //проверим существует ли токен в хранилище браузера localStorage
-        if (jwt) {
-            auth
-                .checkTokenValidity(jwt)
-                .then((res) => {
-                    setIsLogin(true);
-                    setEmail(res.data.email);
-                    history.push("/");
-                })
-                .catch((err) => {
-                    if (err.status === 401) {
-                        console.log("401 — Токен не передан или передан не в том формате");
-                    }
-                    console.log("401 — Переданный токен некорректен");
-                });
-        }
-    }, [history]);
+        // проверка токена в хранилище браузера localStorage
+        if (localStorage.getItem("jwt")) {
+            const jwt = localStorage.getItem("jwt");
+                jwt && auth.checkTokenValidity(jwt)
+                        .then((data) => {
+                            setIsLogin(true);
+                            setEmail(data.data.email);
+                            history.push("/");
+                        })
+                        .catch((err => console.error(`Error: ${err}`)));
+                }
+    });
 
     function handleLogIn(email, password) {
         auth
             .login(email, password)
-            .then((res) => {
-                localStorage.setItem("jwt", res.token);
+            .then(data => {
+                data.token &&
+                localStorage.setItem("jwt", data.token);
                 setIsLogin(true);
                 setEmail(email);
                 history.push("/");
             })
-            .catch((err) => {
-                if (err.status === 400) {
-                    console.log("400: не передано одно из полей");
-                } else if (err.status === 401) {
-                    console.log("401: пользователь с email не найден");
-                }
-                setInfoToolTipPopupOpen(true);
+            .catch(err => {
+                console.error(`Error: ${err}`)
+                setIsInfoToolTipPopupOpen(true);
                 setIsRegistered(false);
             });
     }
@@ -171,16 +150,14 @@ export default function App() {
     function handleRegistration(email, password) {
         auth
             .register(email, password)
-            .then((res) => {
-                setInfoToolTipPopupOpen(true);
+            .then(() => {
+                setIsInfoToolTipPopupOpen(true);
                 setIsRegistered(true);
-                history.push("/sign-in");
+                history.push("/signin");
             })
             .catch((err) => {
-                if (err.status === 400) {
-                    console.log("400: некорректно заполнено одно из полей");
-                }
-                setInfoToolTipPopupOpen(true);
+                console.error(`Error: ${err}`)
+                setIsInfoToolTipPopupOpen(true);
                 setIsRegistered(false);
             });
     }
@@ -203,8 +180,7 @@ export default function App() {
             <Header email={email} logOut={handleLogOut} />
             <Switch>
                 <ProtectedRoute
-                    exact
-                    path="/"
+                    exact path="/"
                     isLogin={isLogin}
                     component={Main}
                     cards={cards}
@@ -260,11 +236,11 @@ export default function App() {
                 card={selectedCard}
                 onClose={closeAllPopups} />
 
+            {/* Попап успеха/ошибки авторизации */}
             <InfoToolTip
                 isOpen={isInfoToolTipPopupOpen}
                 onClose={closeAllPopups}
-                isRegistered={isRegistered}
-            />
+                isRegistered={isRegistered} />
             </>
         </CurrentUserContext.Provider>
     )
