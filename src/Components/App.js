@@ -128,7 +128,7 @@ export default function App() {
                         })
                         .catch((err => console.error(`Error: ${err}`)));
                 }
-    });
+    }, []);
 
     function handleLogIn(email, password) {
         auth
